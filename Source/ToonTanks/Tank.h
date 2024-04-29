@@ -31,15 +31,33 @@ class TOONTANKS_API ATank : public ABasePawn
 	protected:
 		virtual void BeginPlay() override;
 
+		APlayerController* PlayerController;
+
+		FHitResult HitResult;
+
+		UPROPERTY(EditAnywhere, Category = Movement)
+		float Speed = 100;
+
+		UPROPERTY(EditAnywhere, Category = Movement)
+		float RotationSpeed = 100;
+
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 		class UInputMappingContext* TankMappingContext;
 
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 		class UInputAction* FireAction;
 
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		class UInputAction* MoveAction;
+
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		class UInputAction* RotateAction;
+
 		void Fire(const FInputActionValue& Value);
-		UFUNCTION(BlueprintCallable)
-		void Move(float Value);
+		
+		void Move(const FInputActionValue& Value);
+
+		void Rotate(const FInputActionValue& Value);
 
 	public:	
 		virtual void Tick(float DeltaTime) override;

@@ -6,6 +6,7 @@
 #include "Camera\CameraComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Kismet\GameplayStatics.h"
 
 
 ATank::ATank()
@@ -21,8 +22,8 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
     Super::BeginPlay();
-
-    if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+    PlayerController  = Cast<APlayerController>(GetController());
+    if (PlayerController)
     {
         if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
         {
@@ -40,16 +41,46 @@ void ATank::Fire(const FInputActionValue& Value)
     }
 }
 
-void ATank::Move(float Value)
+void ATank::Move(const FInputActionValue& Value)
 {
-    FVector CurrentLocation = GetActorLocation();
-    SetActorLocation(CurrentLocation + FVector(Value, 0, 0));
-    
+    const float CurrentValue = Value.Get<float>();
+    // UE_LOG(LogTemp, Warning, TEXT("Before Moving %f"), CurrentValue);
+    if (CurrentValue)
+    {
+        float DeltaTime = UGameplayStatics::GetWorldDeltaSeconds(this);
+        // UE_LOG(LogTemp, Warning, TEXT("Moving %f"), CurrentValue);
+        AddActorLocalOffset(FVector(CurrentValue * DeltaTime * Speed, 0, 0), true);
+        
+    }    
+}
+
+void ATank::Rotate(const FInputActionValue& Value)
+{
+    const float CurrentValue = Value.Get<float>();
+    // UE_LOG(LogTemp, Warning, TEXT("Before Moving %f"), CurrentValue);
+    if (CurrentValue)
+    {
+        float DeltaTime = UGameplayStatics::GetWorldDeltaSeconds(this);
+        // UE_LOG(LogTemp, Warning, TEXT("Moving %f"), CurrentValue);
+        AddActorLocalRotation(FRotator(0, CurrentValue * DeltaTime * RotationSpeed, 0), true);
+        
+    }    
 }
 
 void ATank::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
+
+    if (PlayerController)
+    {
+        if (PlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, HitResult))
+        {
+            RotateTurret(HitResult.ImpactPoint);
+            
+            
+        }
+    }
+
 }
 
 void ATank::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -59,5 +90,7 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponen
     if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
     {
         EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &ATank::Fire);
+        EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATank::Move);
+        EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &ATank::Rotate);
     };
 }

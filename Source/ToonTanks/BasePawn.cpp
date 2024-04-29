@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Components\CapsuleComponent.h"
 #include "BasePawn.h"
+#include "Components\CapsuleComponent.h"
+#include "Kismet\GameplayStatics.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -29,6 +30,14 @@ void ABasePawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ABasePawn::RotateTurret(FVector LookAtTarget)
+{
+	FVector ToTarget = LookAtTarget - GetActorLocation();
+	FRotator TargetRotation = FRotator(0, ToTarget.Rotation().Yaw, 0);
+	float DeltaTime = UGameplayStatics::GetWorldDeltaSeconds(this);
+	TurrentMesh->SetWorldRotation(FMath::RInterpTo(TurrentMesh->GetComponentRotation(), TargetRotation, DeltaTime, TurretRotatingSpeed));
 }
 
 // Called every frame

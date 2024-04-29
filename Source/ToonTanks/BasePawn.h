@@ -19,6 +19,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	void RotateTurret(FVector LookAtTarget);
+
+	UPROPERTY(EditAnywhere, Category = movement)
+	float TurretRotatingSpeed = 10;
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Super Duper Components", meta = (AllowPrivateAccess = "true"))
 	class UCapsuleComponent* CapsuleComp;
