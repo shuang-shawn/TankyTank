@@ -30,6 +30,8 @@ ABasePawn::ABasePawn()
 void ABasePawn::BeginPlay()
 {
 	Super::BeginPlay();
+
+
 	
 }
 
@@ -43,7 +45,8 @@ void ABasePawn::RotateTurret(FVector TargetLocation)
 
 void ABasePawn::FireBullet()
 {
-	GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation());
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation());
+	Projectile->SetOwner(this);
 }
 
 // Called every frame
