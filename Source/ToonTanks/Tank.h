@@ -31,7 +31,7 @@ class TOONTANKS_API ATank : public ABasePawn
 	protected:
 		virtual void BeginPlay() override;
 
-		APlayerController* PlayerController;
+		APlayerController* TankPlayerController;
 
 		FHitResult HitResult;
 
@@ -62,4 +62,8 @@ class TOONTANKS_API ATank : public ABasePawn
 	public:	
 		virtual void Tick(float DeltaTime) override;
 		virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+		void HandleDestruction();
+
+		APlayerController* GetTankPlayerController() const { return TankPlayerController; }
 };

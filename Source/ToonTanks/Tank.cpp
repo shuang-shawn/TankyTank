@@ -22,10 +22,10 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
     Super::BeginPlay();
-    PlayerController  = Cast<APlayerController>(GetController());
-    if (PlayerController)
+    TankPlayerController  = Cast<APlayerController>(GetController());
+    if (TankPlayerController)
     {
-        if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+        if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(TankPlayerController->GetLocalPlayer()))
         {
             Subsystem->AddMappingContext(TankMappingContext, 0);
         }
@@ -71,9 +71,9 @@ void ATank::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    if (PlayerController)
+    if (TankPlayerController)
     {
-        if (PlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, HitResult))
+        if (TankPlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, HitResult))
         {
             RotateTurret(HitResult.ImpactPoint);
             
@@ -93,4 +93,13 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponen
         EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATank::Move);
         EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &ATank::Rotate);
     };
+}
+
+void ATank::HandleDestruction()
+{
+    Super::HandleDestruction();
+    SetActorHiddenInGame(true);
+    SetActorTickEnabled(false);
+
+
 }
