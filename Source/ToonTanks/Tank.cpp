@@ -37,7 +37,7 @@ void ATank::Fire(const FInputActionValue& Value)
     const bool CurrentValue = Value.Get<bool>();
     if (CurrentValue)
     {
-        UE_LOG(LogTemp, Warning, TEXT("Fire Triggered"));
+        FireBullet();
     }
 }
 
@@ -89,7 +89,7 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponen
 
     if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
     {
-        EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &ATank::Fire);
+        EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &ATank::Fire);
         EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATank::Move);
         EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &ATank::Rotate);
     };

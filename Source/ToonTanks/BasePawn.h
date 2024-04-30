@@ -19,10 +19,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	void RotateTurret(FVector LookAtTarget);
+	void RotateTurret(FVector TargetLocation);
 
 	UPROPERTY(EditAnywhere, Category = movement)
 	float TurretRotatingSpeed = 10;
+
+	void FireBullet();
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	TSubclassOf<class AProjectile> ProjectileClass;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Super Duper Components", meta = (AllowPrivateAccess = "true"))
@@ -36,6 +41,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Super Duper Components", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* ProjectileSpawnPoint;
+
+
 
 public:	
 	// Called every frame
