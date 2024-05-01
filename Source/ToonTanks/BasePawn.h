@@ -51,6 +51,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<class UCameraShakeBase> DeathCameraShakeClass;
 
+	UActorComponent* HealthComp;
+
 
 
 public:	

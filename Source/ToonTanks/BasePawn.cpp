@@ -4,6 +4,7 @@
 #include "Components\CapsuleComponent.h"
 #include "Kismet\GameplayStatics.h"
 #include "Projectile.h"
+#include "HealthComponent.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -21,6 +22,11 @@ ABasePawn::ABasePawn()
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	ProjectileSpawnPoint->SetupAttachment(TurrentMesh);
+
+	HealthComp = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Pool"));
+
+
+	
 
 
 
