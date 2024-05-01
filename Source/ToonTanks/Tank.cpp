@@ -73,7 +73,7 @@ void ATank::Tick(float DeltaTime)
 
     if (TankPlayerController)
     {
-        if (TankPlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, HitResult))
+        if (TankPlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, HitResult) && CanMove)
         {
             RotateTurret(HitResult.ImpactPoint);
             
@@ -102,4 +102,9 @@ void ATank::HandleDestruction()
     SetActorTickEnabled(false);
 
 
+}
+
+void ATank::SetCanMove(bool AbleMove)
+{
+    CanMove = AbleMove;
 }

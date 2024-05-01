@@ -38,5 +38,6 @@ private:
 	int32 TargetTowers = 0;
 	int32 GetTargetTowerCount();
 	void StopAllTowers();
+	void PausePlayer(AToonTanksPlayerController* PlayerController);
 	
 };

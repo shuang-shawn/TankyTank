@@ -35,6 +35,8 @@ class TOONTANKS_API ATank : public ABasePawn
 
 		FHitResult HitResult;
 
+		bool CanMove = true;
+
 		UPROPERTY(EditAnywhere, Category = Movement)
 		float Speed = 100;
 
@@ -66,4 +68,6 @@ class TOONTANKS_API ATank : public ABasePawn
 		void HandleDestruction();
 
 		APlayerController* GetTankPlayerController() const { return TankPlayerController; }
+
+		void SetCanMove(bool CanMove);
 };

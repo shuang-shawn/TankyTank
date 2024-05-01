@@ -13,10 +13,7 @@ void AToonTanksGameMode::ActorDied(AActor* DeadActor)
     if (DeadActor == Tank)
     {
         Tank->HandleDestruction();
-        if (ToonTanksPlayerController)
-        {
-            ToonTanksPlayerController->SetPlayerEnabledState(false);
-        }
+        PausePlayer(ToonTanksPlayerController);
         StopAllTowers();
         GameOver(false);
         
@@ -27,6 +24,7 @@ void AToonTanksGameMode::ActorDied(AActor* DeadActor)
         TargetTowers--;
         if(TargetTowers <= 0)
         {
+            PausePlayer(ToonTanksPlayerController);
             GameOver(true);
         }
     }
@@ -76,3 +74,13 @@ void AToonTanksGameMode::StopAllTowers()
         Cast<ATower>(Tower)->StopFire();
     }
 }
+
+void AToonTanksGameMode::PausePlayer(AToonTanksPlayerController* PlayerController)
+{
+      if (PlayerController)
+        {
+            PlayerController->SetPlayerEnabledState(false);
+        }
+}
+
+
