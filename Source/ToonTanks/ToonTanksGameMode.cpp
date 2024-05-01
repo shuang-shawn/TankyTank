@@ -80,6 +80,8 @@ void AToonTanksGameMode::PausePlayer(AToonTanksPlayerController* PlayerControlle
       if (PlayerController)
         {
             PlayerController->SetPlayerEnabledState(false);
+            PlayerController->bShowMouseCursor = true;
+            PlayerController->CurrentMouseCursor = EMouseCursor::Default;
         }
 }
 
