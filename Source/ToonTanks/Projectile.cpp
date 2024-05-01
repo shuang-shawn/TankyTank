@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "GameFramework\ProjectileMovementComponent.h"
 #include "Kismet\GameplayStatics.h"
+#include "Particles\ParticleSystemComponent.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -13,6 +14,9 @@ AProjectile::AProjectile()
 
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile"));
 	RootComponent = StaticMesh;
+
+	TrailSmoke = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Trail Smoke"));
+	TrailSmoke->SetupAttachment(RootComponent);
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	if (ProjectileMovementComponent)
@@ -29,8 +33,10 @@ void AProjectile::BeginPlay()
 	Super::BeginPlay();
 
 	StaticMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
-
-	
+	if (LaunchSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
+	}
 }
 
 // Called every frame
@@ -51,8 +57,19 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 		if (OtherActor && OtherActor != this && OtherActor != MyOwner)
 		{
 			UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageTypeClass);
-			Destroy();
+			if(HitParticles)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
+			}
+			if (HitSound)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+			}
 		}
+		Destroy();
 	}
+	Destroy();
+
+	
 }
 

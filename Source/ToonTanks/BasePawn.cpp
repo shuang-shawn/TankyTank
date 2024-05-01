@@ -66,5 +66,14 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ABasePawn::HandleDestruction()
 {
 	// TODO: Visual/sound effects
+	if (DeathParticle)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticle, GetActorLocation(), GetActorRotation());
+	}
+
+	if (DeathSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
+	}
 }
 

@@ -28,6 +28,9 @@ private:
 	UStaticMeshComponent* StaticMesh;
 
 	UPROPERTY(VisibleAnywhere)
+	class UParticleSystemComponent* TrailSmoke;
+
+	UPROPERTY(VisibleAnywhere)
 	class UProjectileMovementComponent* ProjectileMovementComponent;
 
 	UFUNCTION()
@@ -35,5 +38,14 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float Damage = 50.f;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	UParticleSystem* HitParticles;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	class USoundBase* LaunchSound;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	USoundBase* HitSound;
 
 };
