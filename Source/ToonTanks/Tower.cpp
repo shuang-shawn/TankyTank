@@ -28,6 +28,11 @@ void ATower::HandleDestruction()
     Destroy();
 }
 
+void ATower::StopFire()
+{
+    GetWorldTimerManager().ClearAllTimersForObject(this);
+}
+
 void ATower::BeginPlay()
 {
     Super::BeginPlay();

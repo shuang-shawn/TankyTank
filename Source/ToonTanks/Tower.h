@@ -19,6 +19,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void HandleDestruction();
+	void StopFire();
+
 
 protected:
 
@@ -38,7 +40,4 @@ private:
 	void CheckFireCondition();
 	bool CheckDistance(AActor* Target, float Distance);
 
-
-
-	
 };

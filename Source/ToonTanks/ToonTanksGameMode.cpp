@@ -17,6 +17,7 @@ void AToonTanksGameMode::ActorDied(AActor* DeadActor)
         {
             ToonTanksPlayerController->SetPlayerEnabledState(false);
         }
+        StopAllTowers();
         GameOver(false);
         
     }
@@ -64,4 +65,14 @@ int32 AToonTanksGameMode::GetTargetTowerCount()
     TArray<AActor*> Towers;
     UGameplayStatics::GetAllActorsOfClass(this, ATower::StaticClass(), Towers);
     return Towers.Num();
+}
+
+void AToonTanksGameMode::StopAllTowers()
+{
+    TArray<AActor*> Towers;
+    UGameplayStatics::GetAllActorsOfClass(this, ATower::StaticClass(), Towers);
+    for (AActor* Tower : Towers)
+    {
+        Cast<ATower>(Tower)->StopFire();
+    }
 }
