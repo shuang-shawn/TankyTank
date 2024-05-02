@@ -52,8 +52,10 @@ void AToonTanksGameMode::HandleGameStart()
         ToonTanksPlayerController->SetPlayerEnabledState(false);
 
         FTimerHandle PlayerEnableTimerHandle;
+        FTimerHandle ShowUITimerHandle;
         FTimerDelegate TimerDelegate = FTimerDelegate::CreateUObject(ToonTanksPlayerController, &AToonTanksPlayerController::SetPlayerEnabledState, true);
         GetWorldTimerManager().SetTimer(PlayerEnableTimerHandle, TimerDelegate, StartDelay, false);
+        GetWorldTimerManager().SetTimer(ShowUITimerHandle, this, &AToonTanksGameMode::ShowUI, StartDelay, false);
 
     }
 }

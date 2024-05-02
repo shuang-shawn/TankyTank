@@ -26,6 +26,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void GameOver(bool bWonGame);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowUI();
+
 
 private:
 	class ATank* Tank;

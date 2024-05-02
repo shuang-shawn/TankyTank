@@ -16,6 +16,8 @@ public:
 	// Sets default values for this component's properties
 	UHealthComponent();
 
+	
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -23,6 +25,7 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	float MaxHealth = 100.f;
+	UPROPERTY(EditAnywhere)
 	float Health = 0.f;
 
 	UFUNCTION()
@@ -33,6 +36,11 @@ private:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	UFUNCTION(BlueprintCallable)
+	float GetCurrentHealth();
+
+	UFUNCTION(BlueprintCallable)
+	float GetMaxHealth();
 
 		
 };

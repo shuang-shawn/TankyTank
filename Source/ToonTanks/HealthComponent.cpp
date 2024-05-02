@@ -15,6 +15,16 @@ UHealthComponent::UHealthComponent()
 	// ...
 }
 
+float UHealthComponent::GetCurrentHealth()
+{
+	return Health;
+}
+
+float UHealthComponent::GetMaxHealth()
+{
+	return MaxHealth;
+}
+
 
 // Called when the game starts
 void UHealthComponent::BeginPlay()
