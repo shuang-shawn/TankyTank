@@ -32,6 +32,10 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UActorComponent* HealthComp;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	int32 Level = 0;
+
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Super Duper Components", meta = (AllowPrivateAccess = "true"))
 	class UCapsuleComponent* CapsuleComp;
